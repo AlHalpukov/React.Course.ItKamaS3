@@ -70,3 +70,5 @@ export default tseslint.config([
 ```
 
 # React.Course.ItKamaS3
+
+'JetBrains Mono',Consolas, 'Courier New', monospace
