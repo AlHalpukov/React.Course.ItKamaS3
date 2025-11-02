@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import TrackItem from "./TrackItem";
 
-function TrackList() {
-  const [selectedTrackId, setSelectedTrackId] = useState(null);
+function TrackList({ onTrackSelect, selectedTrackId }) {
   const [tracks, setTracks] = useState(null);
 
   useEffect(() => {
@@ -12,6 +12,8 @@ function TrackList() {
       .then((response) => response.json())
       .then((json) => setTracks(json.data));
   }, []);
+
+  const handleResetClick = () => onTrackSelect?.(null);
 
   if (tracks === null) {
     return (
@@ -32,31 +34,22 @@ function TrackList() {
   }
 
   return (
-    <ul>
-      {tracks.map((track) => {
-        return (
-          <li
-            key={track.id}
-            style={{
-              backgroundColor:
-                selectedTrackId === track.id ? "#4e4b4bd0" : undefined,
-            }}
-            onClick={() => {
-              setSelectedTrackId(track.id);
-            }}
-          >
-            <div
-              style={{
-                color: selectedTrackId === track.id ? "green" : undefined,
-              }}
-            >
-              {track.attributes.title}
-            </div>
-            <audio controls src={track.attributes.attachments[0].url}></audio>
-          </li>
-        );
-      })}
-    </ul>
+    <div>
+      <button onClick={handleResetClick}>Reset Selection</button>
+      <hr />
+      <ul style={{ listStyle: "none" }}>
+        {tracks.map((track) => {
+          return (
+            <TrackItem
+              key={track.id}
+              track={track}
+              onTrackSelect={onTrackSelect}
+              isSelected={selectedTrackId === track.id}
+            />
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
