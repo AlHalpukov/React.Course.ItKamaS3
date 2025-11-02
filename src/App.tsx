@@ -1,32 +1,18 @@
-import { useState } from "react";
-
-const tracks = [
-  {
-    id: 1,
-    selected: true,
-    title: "Musicfun soundtrack",
-    url: "https://musicfun.it-incubator.app/api/samurai-way-soundtrack.mp3",
-  },
-  {
-    id: 2,
-    title: "Musicfun soundtrack instrumental",
-    url: "https://musicfun.it-incubator.app/api/samurai-way-soundtrack-instrumental.mp3",
-  },
-  {
-    id: 3,
-    selected: true,
-    title: "Musicfun soundtrack instrumental",
-    url: "https://musicfun.it-incubator.app/api/samurai-way-soundtrack-instrumental.mp3",
-  },
-  {
-    id: 4,
-    title: "Musicfun soundtrack instrumental",
-    url: "https://musicfun.it-incubator.app/api/samurai-way-soundtrack-instrumental.mp3",
-  },
-];
+import { useEffect, useState } from "react";
 
 function App() {
+  console.log("App render");
   const [selectedTrackId, setSelectedTrackId] = useState(3);
+  const [tracks, setTracks] = useState(null);
+
+  useEffect(() => {
+    fetch(
+      "https://musicfun.it-incubator.app/api/1.0/playlists/tracks?pageNumber=1&pageSize=20&sortBy=publishedAt&sortDirection=desc&paginationType=offset",
+      { headers: { "api-key": "2128989c-130d-4766-aaf4-d0a319a66f59" } }
+    )
+      .then((response) => response.json())
+      .then((json) => setTracks(json.data));
+  }, []);
 
   if (tracks === null) {
     return (
@@ -57,20 +43,22 @@ function App() {
         Reset selection
       </button>
       <ul>
-        {tracks.map(({ id, title, url, selected }) => (
+        {tracks.map((track) => (
           <li
-            key={id}
-            className={selected ? "selected" : undefined}
+            key={track.id}
+            // className={selected ? "selected" : undefined}
             onClick={() => {
-              setSelectedTrackId(id);
+              setSelectedTrackId(track.id);
             }}
           >
             <div
-              style={{ color: selectedTrackId === id ? "green" : undefined }}
+              style={{
+                color: selectedTrackId === track.id ? "green" : undefined,
+              }}
             >
-              {title}
+              {track.attributes.title}
             </div>
-            <audio controls src={url}></audio>
+            <audio controls src={track.attributes.attachments[0].url}></audio>
           </li>
         ))}
       </ul>
