@@ -1,5 +1,4 @@
-// const tracks = null;
-// const tracks = [];
+import { useState } from "react";
 
 const tracks = [
   {
@@ -26,20 +25,9 @@ const tracks = [
   },
 ];
 
-const selectedTrackId = 3;
-
-const Item = ({ id, title, url, selected }) => {
-  return (
-    <li className={selected ? "selected" : null}>
-      <div style={{ color: selectedTrackId === id ? "green" : undefined }}>
-        {title}
-      </div>
-      <audio controls src={url}></audio>
-    </li>
-  );
-};
-
 function App() {
+  const [selectedTrackId, setSelectedTrackId] = useState(3);
+
   if (tracks === null) {
     return (
       <>
@@ -57,12 +45,33 @@ function App() {
       </>
     );
   }
+
   return (
     <>
       <h1>Musicfun Player</h1>
+      <button
+        onClick={() => {
+          setSelectedTrackId(null);
+        }}
+      >
+        Reset selection
+      </button>
       <ul>
         {tracks.map(({ id, title, url, selected }) => (
-          <Item key={id} id={id} title={title} url={url} selected={selected} />
+          <li
+            key={id}
+            className={selected ? "selected" : undefined}
+            onClick={() => {
+              setSelectedTrackId(id);
+            }}
+          >
+            <div
+              style={{ color: selectedTrackId === id ? "green" : undefined }}
+            >
+              {title}
+            </div>
+            <audio controls src={url}></audio>
+          </li>
         ))}
       </ul>
     </>
