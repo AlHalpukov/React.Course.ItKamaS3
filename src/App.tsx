@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 function App() {
   console.log("App render");
-  const [selectedTrackId, setSelectedTrackId] = useState(3);
+  const [selectedTrackId, setSelectedTrackId] = useState(null);
   const [tracks, setTracks] = useState(null);
+  const [selectedTrack, setSelectedTrack] = useState(null);
 
   useEffect(() => {
     fetch(
@@ -13,6 +14,20 @@ function App() {
       .then((response) => response.json())
       .then((json) => setTracks(json.data));
   }, []);
+
+  useEffect(
+    () => {
+      if (!selectedTrackId) return;
+      fetch(
+        "https://musicfun.it-incubator.app/api/1.0/playlists/tracks/" +
+          selectedTrackId,
+        { headers: { "api-key": "2128989c-130d-4766-aaf4-d0a319a66f59" } }
+      )
+        .then((response) => response.json())
+        .then((json) => setSelectedTrack(json.data));
+    },
+    [selectedTrackId]
+  );
 
   if (tracks === null) {
     return (
@@ -38,30 +53,56 @@ function App() {
       <button
         onClick={() => {
           setSelectedTrackId(null);
+          setSelectedTrack(null);
         }}
       >
         Reset selection
       </button>
-      <ul>
-        {tracks.map((track) => (
-          <li
-            key={track.id}
-            // className={selected ? "selected" : undefined}
-            onClick={() => {
-              setSelectedTrackId(track.id);
-            }}
-          >
-            <div
-              style={{
-                color: selectedTrackId === track.id ? "green" : undefined,
-              }}
-            >
-              {track.attributes.title}
+      <div style={{ display: "flex", gap: "30px" }}>
+        <ul>
+          {tracks.map((track) => {
+            return (
+              <li
+                key={track.id}
+                style={{
+                  backgroundColor:
+                    selectedTrackId === track.id ? "#4e4b4bd0" : undefined,
+                }}
+                onClick={() => {
+                  setSelectedTrackId(track.id);
+                }}
+              >
+                <div
+                  style={{
+                    color: selectedTrackId === track.id ? "green" : undefined,
+                  }}
+                >
+                  {track.attributes.title}
+                </div>
+                <audio
+                  controls
+                  src={track.attributes.attachments[0].url}
+                ></audio>
+              </li>
+            );
+          })}
+        </ul>
+        <div>
+          <h3>Track Detail</h3>
+          {!selectedTrackId && <p> Track not selected</p>}
+          {!selectedTrack && selectedTrackId && <p>Loading...</p>}
+          {selectedTrack &&
+            selectedTrackId &&
+            selectedTrack.id !== selectedTrackId && <p>Loading...</p>}
+          {selectedTrack && (
+            <div>
+              <h3>{selectedTrack.attributes.title}</h3>
+              <h4>Lyrics</h4>
+              <p>{selectedTrack.attributes.lyricks ?? "No lyricks"}</p>
             </div>
-            <audio controls src={track.attributes.attachments[0].url}></audio>
-          </li>
-        ))}
-      </ul>
+          )}
+        </div>
+      </div>
     </>
   );
 }
