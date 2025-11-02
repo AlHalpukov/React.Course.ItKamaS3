@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import TrackList from "./components/TrackList";
 import PageTitle from "./components/PageTitle";
+import Game from "./components/Game";
 
 function App() {
   console.log("App render");
@@ -47,6 +48,9 @@ function App() {
           )}
         </div>
       </div>
+
+      <hr />
+      <Game />
     </>
   );
 }
