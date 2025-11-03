@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
-import TrackItem from "./TrackItem";
+import TrackItem, { type TrackListItemResource } from "./TrackItem";
 
-function TrackList({ onTrackSelect, selectedTrackId }) {
-  const [tracks, setTracks] = useState(null);
+type TrackListProps = {
+  onTrackSelect: (id: string | null) => void;
+  selectedTrackId: string | null;
+};
+
+function TrackList({ selectedTrackId, onTrackSelect }: TrackListProps) {
+  const [tracks, setTracks] = useState<Array<TrackListItemResource> | null>(
+    null
+  );
 
   useEffect(() => {
     fetch(

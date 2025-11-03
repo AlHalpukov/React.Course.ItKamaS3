@@ -1,7 +1,22 @@
 import { useEffect, useState } from "react";
 
-function TrackDetail({ trackId }) {
-  const [selectedTrack, setSelectedTrack] = useState(null);
+type TrackDetailsResource = {
+  id: string;
+  attributes: TrackDetailsAttributes;
+};
+
+type TrackDetailsAttributes = {
+  title: string;
+  lyrics: string | null;
+};
+
+type TrackDetailProps = {
+  trackId: string | null;
+};
+
+function TrackDetail({ trackId }: TrackDetailProps) {
+  const [selectedTrack, setSelectedTrack] =
+    useState<TrackDetailsResource | null>(null);
 
   useEffect(() => {
     if (!trackId) {
@@ -28,7 +43,7 @@ function TrackDetail({ trackId }) {
         <div>
           <h3>{selectedTrack.attributes.title}</h3>
           <h4>Lyrics</h4>
-          <p>{selectedTrack.attributes.lyricks ?? "No lyricks"}</p>
+          <p>{selectedTrack.attributes.lyrics ?? "No lyricks"}</p>
         </div>
       )}
     </div>

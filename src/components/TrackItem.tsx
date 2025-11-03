@@ -1,4 +1,24 @@
-function TrackItem({ track, onTrackSelect, isSelected }) {
+export type TrackListItemResource = {
+  id: string;
+  attributes: TrackListItemAttributes;
+};
+
+type TrackListItemAttributes = {
+  title: string | null;
+  attachments: Array<TrackAttachment>;
+};
+
+type TrackAttachment = {
+  url: string;
+};
+
+type TrackItemProps = {
+  track: TrackListItemResource;
+  onTrackSelect: (id: string | null) => void;
+  isSelected: boolean;
+};
+
+function TrackItem({ track, onTrackSelect, isSelected }: TrackItemProps) {
   const handleClick = () => {
     onTrackSelect?.(track.id);
   };
