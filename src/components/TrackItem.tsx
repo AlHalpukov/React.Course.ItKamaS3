@@ -1,16 +1,4 @@
-export type TrackListItemResource = {
-  id: string;
-  attributes: TrackListItemAttributes;
-};
-
-type TrackListItemAttributes = {
-  title: string | null;
-  attachments: Array<TrackAttachment>;
-};
-
-type TrackAttachment = {
-  url: string;
-};
+import type { TrackListItemResource } from "../api/api";
 
 type TrackItemProps = {
   track: TrackListItemResource;

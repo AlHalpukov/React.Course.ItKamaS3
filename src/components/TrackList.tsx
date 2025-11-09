@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import TrackItem, { type TrackListItemResource } from "./TrackItem";
+import { getTracks, type TrackListItemResource } from "../api/api";
+import TrackItem from "./TrackItem";
 
 type TrackListProps = {
   onTrackSelect: (id: string | null) => void;
@@ -12,12 +13,7 @@ function TrackList({ selectedTrackId, onTrackSelect }: TrackListProps) {
   );
 
   useEffect(() => {
-    fetch(
-      "https://musicfun.it-incubator.app/api/1.0/playlists/tracks?pageNumber=1&pageSize=20&sortBy=publishedAt&sortDirection=desc&paginationType=offset",
-      { headers: { "api-key": "2128989c-130d-4766-aaf4-d0a319a66f59" } }
-    )
-      .then((response) => response.json())
-      .then((json) => setTracks(json.data));
+    getTracks().then((json) => setTracks(json.data));
   }, []);
 
   const handleResetClick = () => onTrackSelect?.(null);
