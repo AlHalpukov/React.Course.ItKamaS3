@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stack</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const React = {
+        render: (component) => {
+          const htmlString = component();
+          document.getElementById("root").innerHTML = htmlString;
+        },
+      };
+
+      const useCustomHook = () => {
+        const [value] = useState(10);
+        return value;
+      };
+
+      const useState = (initValue) => {
+        fiberNode.state = initValue;
+        // react save this value for component
+        return [initValue, () => {}];
+      };
+
+      const Playlist = () => {
+        // const [value] = useState(10);
+        const value = useCustomHook(10);
+        return "I'am playlist";
+      };
+
+      React.render(Playlist);
+    </script>
+  </body>
+</html>
