@@ -1,4 +1,4 @@
-import type { TrackListItemResource } from "../api/api";
+import type { TrackListItemResource } from "../dal/api";
 
 type TrackItemProps = {
   track: TrackListItemResource;

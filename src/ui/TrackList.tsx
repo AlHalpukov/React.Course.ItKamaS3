@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { getTracks, type TrackListItemResource } from "../api/api";
 import TrackItem from "./TrackItem";
+import { useTracks } from "../bll/useTracks";
 
 type TrackListProps = {
   onTrackSelect: (id: string | null) => void;
@@ -8,13 +7,7 @@ type TrackListProps = {
 };
 
 function TrackList({ selectedTrackId, onTrackSelect }: TrackListProps) {
-  const [tracks, setTracks] = useState<Array<TrackListItemResource> | null>(
-    null
-  );
-
-  useEffect(() => {
-    getTracks().then((json) => setTracks(json.data));
-  }, []);
+  const { tracks } = useTracks();
 
   const handleResetClick = () => onTrackSelect?.(null);
 

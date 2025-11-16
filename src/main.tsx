@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import MainPage from "./components/MainPage.tsx";
+import MainPage from "./ui/MainPage.tsx";
 import "./index.css";
 
 const rootEl = document.getElementById("root");

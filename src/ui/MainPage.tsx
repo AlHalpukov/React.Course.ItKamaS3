@@ -1,19 +1,20 @@
-import { useState } from "react";
 import TrackDetail from "./TrackDetail";
 import TrackList from "./TrackList";
+import PageTitle from "./PageTitle";
+import { useTrackSelection } from "../bll/useTrackSelection";
 
 function MainPage() {
-  const [trackId, setTrackId] = useState<string | null>(null);
+  const { trackId, setTrackId } = useTrackSelection();
 
   const handleTrackSelect = (id: string | null) => {
     setTrackId(id);
   };
-
   return (
     <>
       {/* <Header />
       <SidebarMenu />
-      <PageTitle /> */}
+      */}
+      <PageTitle />
       <div style={{ display: "flex", gap: "40px" }}>
         <TrackList
           selectedTrackId={trackId}
