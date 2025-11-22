@@ -1,4 +1,4 @@
-import TrackDetail from "./TrackDetail";
+import TrackDetail from "./TrackDetail/TrackDetail";
 import TrackList from "./TrackList";
 import PageTitle from "./PageTitle";
 import { useTrackSelection } from "../bll/useTrackSelection";

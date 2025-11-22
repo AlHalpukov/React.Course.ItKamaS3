@@ -1,0 +1,11 @@
+.track {
+  border: 3px solid white;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.selected {
+  background-color: #0d3441;
+  border: 3px solid darkgreen;
+}

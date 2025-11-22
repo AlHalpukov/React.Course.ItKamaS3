@@ -1,4 +1,4 @@
-import TrackItem from "./TrackItem";
+import TrackItem from "./TrackItem/TrackItem";
 import { useTracks } from "../bll/useTracks";
 
 type TrackListProps = {
@@ -33,7 +33,7 @@ function TrackList({ selectedTrackId, onTrackSelect }: TrackListProps) {
     <div>
       <button onClick={handleResetClick}>Reset Selection</button>
       <hr />
-      <ul style={{ listStyle: "none" }}>
+      <ul style={{ listStyle: "none" }} className="tracks">
         {tracks.map((track) => {
           return (
             <TrackItem

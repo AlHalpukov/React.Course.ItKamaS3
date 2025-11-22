@@ -1,4 +1,5 @@
-import { useTrackDetail } from "../bll/useTrackDetail";
+import { useTrackDetail } from "../../bll/useTrackDetail";
+import styles from "./TrackDetail.module.css";
 
 type TrackDetailProps = {
   trackId: string | null;
@@ -7,8 +8,8 @@ type TrackDetailProps = {
 function TrackDetail({ trackId = null }: TrackDetailProps) {
   const { trackDetails } = useTrackDetail(trackId);
   return (
-    <div>
-      <h3>Track Detail</h3>
+    <div className={styles.track}>
+      <h2>Track Detail</h2>
       {!trackId && <p> Track not selected</p>}
       {!trackDetails && trackId && <p>Loading...</p>}
       {trackDetails && trackId && trackDetails.id !== trackId && (
@@ -16,7 +17,7 @@ function TrackDetail({ trackId = null }: TrackDetailProps) {
       )}
       {trackDetails && (
         <div>
-          <h3>{trackDetails.attributes.title}</h3>
+          <h2>{trackDetails.attributes.title}</h2>
           <h4>Lyrics</h4>
           <p>{trackDetails.attributes.lyrics ?? "No lyricks"}</p>
         </div>
